@@ -46,7 +46,6 @@ Cada um deverá ter sua própia conta, onde poderá verificar seu saldo, extrato
 - React navigation, até dia 25/04
 - Fazer integração com API REST, até dia 30/05
 - Fazer persistência de dados, até dia 30/05
-- Criar área para administrador, até dia 26/06
 
 ## Funcionalidades desejáveis para o futuro:
 
