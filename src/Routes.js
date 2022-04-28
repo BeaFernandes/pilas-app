@@ -2,82 +2,119 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { View } from "react-native";
 
+import { useContext } from "react";
+import { AppContext } from "./contexts/AppContext";
+
+import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Produtos from "./pages/Products";
 import Conta from "./pages/Account";
 import Extrato from "./pages/Extract";
-import { View } from "react-native";
+import PersonalizedHeader from "./components/PersonalizedHeader";
+import Balance from "./components/Balance";
 
-const HomeStack = createNativeStackNavigator();
-
-function HomeStackScreen() {
-  return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={Home} />
-      <HomeStack.Screen name="Extrato" component={Extrato} />
-    </HomeStack.Navigator>
-  );
-}
-
-const ProductStack = createNativeStackNavigator();
-
-function ProductStackScreen() {
-  return (
-    <ProductStack.Navigator>
-      <ProductStack.Screen name="Produtos" component={Produtos} />
-      <ProductStack.Screen name="Extrato" component={Extrato} />
-    </ProductStack.Navigator>
-  );
-}
-
-const AccountStack = createNativeStackNavigator();
-
-function AccountStackScreen() {
-  return (
-    <AccountStack.Navigator>
-      <AccountStack.Screen name="Conta" component={Conta} />
-      <AccountStack.Screen name="Extrato" component={Extrato} />
-    </AccountStack.Navigator>
-  );
-}
-
+const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+const StackNested = createNativeStackNavigator();
 
 export default function Routes() {
+  const app = useContext(AppContext);
+
+  const NavigatorLogin = () => (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+
+  const NavigatorNested = () => (
+    <StackNested.Navigator>
+      <StackNested.Screen
+        name="HomeScreen"
+        component={Home}
+        options={{
+          title: "Pilas",
+          headerStyle: { backgroundColor: "#36A7D0" },
+          headerTintColor: "#fff",
+        }}
+      />
+      <StackNested.Screen
+        name="Extrato"
+        component={Extrato}
+        options={{
+          headerStyle: { backgroundColor: "#36A7D0" },
+          headerTintColor: "#fff",
+        }}
+      />
+    </StackNested.Navigator>
+  );
+
+  const NavigatorTabs = () => (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === "Home") {
+            iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "Produtos") {
+            iconName = focused ? "store" : "store-outline";
+          } else if (route.name === "Conta") {
+            iconName = focused ? "account-circle" : "account-circle-outline";
+          }
+
+          return (
+            <View>
+              <MaterialCommunityIcons
+                name={iconName}
+                size={size}
+                color={color}
+              />
+            </View>
+          );
+        },
+        tabBarActiveTintColor: "#36A7D0",
+        tabBarInactiveTintColor: "gray",
+      })}
+    >
+      <Tab.Screen
+        name="Home"
+        component={NavigatorNested}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Produtos"
+        component={Produtos}
+        options={{
+          headerTitle: () => (
+            <PersonalizedHeader
+              titleComponent={<Balance amount={"30,00"} fontColor={"#fff"} />}
+            />
+          ),
+          headerStyle: { backgroundColor: "#36A7D0" },
+          headerTintColor: "#fff",
+        }}
+      />
+      <Tab.Screen
+        name="Conta"
+        component={Conta}
+        options={{
+          headerTitle: "Minha conta",
+          headerStyle: { backgroundColor: "#36A7D0" },
+          headerTintColor: "#fff",
+        }}
+      />
+    </Tab.Navigator>
+  );
+
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-
-            if (route.name === "Home") {
-              iconName = focused ? "home" : "home-outline";
-            } else if (route.name === "Produtos") {
-              iconName = focused ? "store" : "store-outline";
-            } else if (route.name === "Conta") {
-              iconName = focused ? "account-circle" : "account-circle-outline";
-            }
-
-            return (
-              <View>
-                <MaterialCommunityIcons
-                  name={iconName}
-                  size={size}
-                  color={color}
-                />
-              </View>
-            );
-          },
-          tabBarActiveTintColor: "#36A7D0",
-          tabBarInactiveTintColor: "gray",
-        })}
-      >
-        <Tab.Screen name="Home" component={HomeStackScreen} />
-        <Tab.Screen name="Produtos" component={ProductStackScreen} />
-        <Tab.Screen name="Conta" component={AccountStackScreen} />
-      </Tab.Navigator>
+      {!app.isLoggedIn ? <NavigatorLogin /> : <NavigatorTabs />}
     </NavigationContainer>
   );
 }
