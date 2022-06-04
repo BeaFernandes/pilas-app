@@ -1,13 +1,18 @@
-import { View, Text, Image, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import React from "react";
 import PersonalInfoItem from "./PersonalInfoItem";
+import useAuth from "../../firebase/hooks/useAuth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function PersonalInfos() {
+  const { logout } = useAuth();
   const app = useContext(AppContext);
 
   const handleLogout = () => {
+    AsyncStorage.removeItem("login");
+    logout();
     app.setLoggedIn(false);
   };
 

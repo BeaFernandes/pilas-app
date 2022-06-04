@@ -1,24 +1,25 @@
-import {
-  View,
-  Text,
-  Image,
-  Button,
-  SafeAreaView,
-  StyleSheet,
-  TextInput,
-} from "react-native";
-import React from "react";
+import { View, Text, Image, Button, StyleSheet, TextInput } from "react-native";
+import { React, useState } from "react";
 import { useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
+import useAuth from "../firebase/hooks/useAuth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login({ navigation }) {
+  const { user, login } = useAuth();
   const app = useContext(AppContext);
-  const handleLogin = () => {
-    app.setLoggedIn(true);
-  };
 
-  const [user, onChangeUser] = React.useState(null);
-  const [pass, onChangPass] = React.useState(null);
+  const [email, onChangeUser] = useState(null);
+  const [pass, onChangPass] = useState(null);
+
+  const handleLogin = () => {
+    console.log(email);
+    console.log(pass);
+    login(email, pass).then((res) => {
+      AsyncStorage.setItem("login", JSON.stringify(res.user));
+      app.setLoggedIn(true);
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -31,7 +32,7 @@ export default function Login({ navigation }) {
         <TextInput
           style={styles.input}
           onChangeText={onChangeUser}
-          value={user}
+          value={email}
           placeholder="Usuário"
         />
         <TextInput
@@ -44,12 +45,7 @@ export default function Login({ navigation }) {
         <View style={styles.loginButton}>
           <Button color="#36A7D0" title="Entrar" onPress={handleLogin} />
         </View>
-        <Text
-          style={styles.link}
-          onPress={() => {
-            this.toast.show("Contate o administrador", 1000);
-          }}
-        >
+        <Text style={styles.link} onPress={() => {}}>
           Esqueci minha senha
         </Text>
       </View>
@@ -63,23 +59,23 @@ export default function Login({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-around",
+    margin: 16,
+    marginTop: 32,
   },
   logo: {
-    top: 100,
     width: 132,
     height: 80,
     resizeMode: "contain",
   },
   powered: {
-    top: 400,
     width: 132,
     height: 80,
     resizeMode: "contain",
   },
   form: {
-    top: 250,
     width: 300,
     alignItems: "stretch",
   },
