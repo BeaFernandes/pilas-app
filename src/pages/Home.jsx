@@ -1,6 +1,7 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import React from "react";
 import Balance from "../components/Balance";
+import Extract from "./Extract";
 
 export default function Home({ navigation }) {
   return (
@@ -14,6 +15,8 @@ export default function Home({ navigation }) {
           <Text style={styles.buttonFont}>Extrato</Text>
         </Pressable>
       </View>
+      <Text style={styles.title}>Compras recentes</Text>
+      <Extract />
     </View>
   );
 }
@@ -21,7 +24,6 @@ export default function Home({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
     alignItems: "center",
     backgroundColor: "#fff",
   },
@@ -44,5 +46,12 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     fontSize: 15,
+  },
+  title: {
+    color: "#8D8D8D",
+    fontSize: 17,
+    paddingTop: 50,
+    paddingLeft: 10,
+    alignSelf: "flex-start",
   },
 });
