@@ -9,15 +9,19 @@ import { AppContext } from "./contexts/AppContext";
 
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-import Produtos from "./pages/Products";
+import Loja from "./pages/Store";
 import Conta from "./pages/Account";
 import Extrato from "./pages/Extract";
 import PersonalizedHeader from "./components/PersonalizedHeader";
 import Balance from "./components/Balance";
+import Usuarios from "./pages/Admin/Users";
+import NovoUsuario from "./pages/Admin/NewUser";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+const TabAdmin = createBottomTabNavigator();
 const StackNested = createNativeStackNavigator();
+const StackFlutterAction = createNativeStackNavigator();
 
 export default function Routes() {
   const app = useContext(AppContext);
@@ -30,6 +34,72 @@ export default function Routes() {
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
+  );
+
+  const NavigatorFlutterAction = () => (
+    <StackFlutterAction.Navigator>
+      <StackFlutterAction.Screen
+        name="Users"
+        component={Usuarios}
+        options={{
+          title: "Usuários",
+          headerStyle: { backgroundColor: "#36A7D0" },
+          headerTintColor: "#fff",
+        }}
+      />
+      <StackFlutterAction.Screen
+        name="NovoUsuario"
+        component={NovoUsuario}
+        options={{
+          title: "Novo usuário",
+          headerStyle: { backgroundColor: "#36A7D0" },
+          headerTintColor: "#fff",
+        }}
+      />
+    </StackFlutterAction.Navigator>
+  );
+
+  const NavigatorAdmin = () => (
+    <TabAdmin.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === "Usuarios") {
+            iconName = focused ? "account-cog" : "account-cog-outline";
+          } else if (route.name === "Conta") {
+            iconName = focused ? "account" : "account-outline";
+          }
+
+          return (
+            <View>
+              <MaterialCommunityIcons
+                name={iconName}
+                size={size}
+                color={color}
+              />
+            </View>
+          );
+        },
+        tabBarActiveTintColor: "#36A7D0",
+        tabBarInactiveTintColor: "gray",
+      })}
+    >
+      <TabAdmin.Screen
+        name="Usuarios"
+        component={NavigatorFlutterAction}
+        options={{ headerShown: false }}
+      />
+      <TabAdmin.Screen
+        name="Conta"
+        component={Conta}
+        options={{
+          headerTitle: "Minha conta",
+          headerStyle: { backgroundColor: "#36A7D0" },
+          headerTintColor: "#fff",
+        }}
+      />
+    </TabAdmin.Navigator>
   );
 
   const NavigatorNested = () => (
@@ -62,10 +132,12 @@ export default function Routes() {
 
           if (route.name === "Home") {
             iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "Produtos") {
+          } else if (route.name === "Loja") {
             iconName = focused ? "store" : "store-outline";
           } else if (route.name === "Conta") {
-            iconName = focused ? "account-circle" : "account-circle-outline";
+            iconName = focused ? "account" : "account-outline";
+          } else if (route.name === "Prefeito") {
+            iconName = focused ? "account-star" : "account-star-outline";
           }
 
           return (
@@ -88,8 +160,8 @@ export default function Routes() {
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name="Produtos"
-        component={Produtos}
+        name="Loja"
+        component={Loja}
         options={{
           headerTitle: () => (
             <PersonalizedHeader
@@ -109,12 +181,24 @@ export default function Routes() {
           headerTintColor: "#fff",
         }}
       />
+      <Tab.Screen
+        name="Prefeito"
+        component={Conta}
+        options={{
+          headerTitle: "Minha conta",
+          headerStyle: { backgroundColor: "#36A7D0" },
+          headerTintColor: "#fff",
+        }}
+      />
     </Tab.Navigator>
   );
 
   return (
     <NavigationContainer>
-      {!app.isLoggedIn ? <NavigatorLogin /> : <NavigatorTabs />}
+      {
+        //!app.isLoggedIn ? <NavigatorLogin /> : <NavigatorTabs />
+        !app.isLoggedIn ? <NavigatorLogin /> : <NavigatorAdmin />
+      }
     </NavigationContainer>
   );
 }

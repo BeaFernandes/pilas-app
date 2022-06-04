@@ -2,23 +2,29 @@ import { View, Text, Image, Button, StyleSheet, TextInput } from "react-native";
 import { React, useState } from "react";
 import { useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
-import useAuth from "../firebase/hooks/useAuth";
+import useAuth from "hooks/useAuth";
+import useReference from "hooks/useReference";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login({ navigation }) {
-  const { user, login } = useAuth();
+  const { login } = useAuth();
   const app = useContext(AppContext);
 
   const [email, onChangeUser] = useState(null);
   const [pass, onChangPass] = useState(null);
 
   const handleLogin = () => {
-    console.log(email);
-    console.log(pass);
-    login(email, pass).then((res) => {
-      AsyncStorage.setItem("login", JSON.stringify(res.user));
-      app.setLoggedIn(true);
-    });
+    login(email, pass)
+      .then((response) => {
+        AsyncStorage.setItem("login", JSON.stringify(response.user.uid));
+        //AsyncStorage.getItem("login").then((value) => {
+        //  if (value !== null) console.log(value);
+        //});
+        app.setLoggedIn(true);
+      })
+      .catch(() => {
+        console.log("Error treatment to be done");
+      });
   };
 
   return (
@@ -33,7 +39,9 @@ export default function Login({ navigation }) {
           style={styles.input}
           onChangeText={onChangeUser}
           value={email}
-          placeholder="Usuário"
+          placeholder="Email"
+          keyboardType="email-address"
+          autoCapitalize="none"
         />
         <TextInput
           style={styles.input}

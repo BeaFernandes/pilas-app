@@ -10,8 +10,8 @@ import {
 export default function useAuth() {
   const [user, setUser] = useState(null);
 
-  const login = async (email, password) => {
-    return await signInWithEmailAndPassword(getAuth(), email, password);
+  const login = (email, password) => {
+    return signInWithEmailAndPassword(getAuth(), email, password);
   };
 
   const logout = () => {

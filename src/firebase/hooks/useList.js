@@ -33,7 +33,7 @@ export default function useList(reference) {
   useEffect(() => {
     const databaseReference = ref(getDatabase(), reference);
 
-    unsubscribeCallback = onValue(databaseReference, (snapshot) => {
+    const unsubscribeCallback = onValue(databaseReference, (snapshot) => {
       setData(snapshot.val());
     });
 
