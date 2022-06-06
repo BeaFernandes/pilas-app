@@ -7,15 +7,16 @@ import {
   TouchableOpacity,
   Keyboard,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { React, useState } from "react";
 import useList from "hooks/useList";
 import createUser from "../../../services/User/createUser";
 
-export default function NewUser({ navigation }) {
-  const users = useList("users");
+export default function NewProduct({ navigation }) {
+  const products = useList("products");
   const [name, onChangeName] = useState(null);
-  const [email, onChangeEmail] = useState(null);
-  const [department, onChangeDepartment] = useState(null);
+  const [price, onChangePrice] = useState(null);
+  const [amount, onChangeAmount] = useState(null);
   const [pass, onChangePass] = useState(null);
   const [confirmPass, onChangeConfirmPass] = useState(null);
 
@@ -66,17 +67,17 @@ export default function NewUser({ navigation }) {
         />
         <TextInput
           style={styles.input}
-          placeholder="Email"
-          value={email}
+          placeholder="Preço"
+          value={price}
           onChangeText={onChangeEmail}
           keyboardType="email-address"
           autoCapitalize="none"
         />
         <TextInput
           style={styles.input}
-          placeholder="Departamento"
-          value={department}
-          onChangeText={onChangeDepartment}
+          placeholder="Quantidade"
+          value={amount}
+          onChangeText={onChangeAmount}
         />
         <TextInput
           style={styles.input}

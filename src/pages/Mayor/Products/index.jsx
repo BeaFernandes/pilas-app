@@ -1,26 +1,18 @@
 import { View, Text, Pressable, StyleSheet, FlatList } from "react-native";
 import { React, useState, useEffect } from "react";
 import { FloatingAction } from "react-native-floating-action";
+import useList from "hooks/useList";
 import UserItem from "../../../components/UserItem";
-import listUsers from "../../../services/User/listUsers";
 
-export default function Users({ navigation }) {
-  const { users } = listUsers;
-
+export default function Products({ navigation }) {
+  const { data } = useList("products");
   const actions = [
     {
-      text: "Novo usuário",
-      name: "NovoUsuario",
+      text: "Novo produto",
+      name: "NovoProduto",
       position: 2,
       color: "#36A7D0",
-      icon: require("images/account.png"),
-    },
-    {
-      text: "Alterar prefeito",
-      name: "bt_alter_mayor",
-      position: 1,
-      color: "#36A7D0",
-      icon: require("images/account-star.png"),
+      icon: require("images/plus.png"),
     },
   ];
 
@@ -28,38 +20,9 @@ export default function Users({ navigation }) {
     navigation.navigate(name);
   };
 
-  const User = ({ user }) => {
-    return (
-      <View>
-        <Text>{user.name}alo</Text>
-      </View>
-    );
-  };
-
-  //const usersList = [];
-  //const test = () => {
-  // if (users.data) {
-  //    Object.keys(users.data).forEach((key) => {
-  //      usersList.push(users.data[key]);
-  //    });
-  //  }
-  //  console.log(usersList[0]);
-  //};
-
-  const handleTest = () => {
-    console.log(users);
-  };
   return (
     <View style={styles.container}>
-      <Pressable style={styles.extractButton} onPress={handleTest}>
-        <Text style={styles.buttonFont}>Extrato</Text>
-      </Pressable>
-
-      <FlatList
-        data={users}
-        renderItem={User}
-        keyExtractor={(user) => user.userId}
-      />
+      <FlatList data={data} keyExtractor={(product) => product.productId} />
 
       <View style={styles.balanceContainer}></View>
       <FloatingAction

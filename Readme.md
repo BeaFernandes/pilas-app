@@ -46,7 +46,32 @@ Cada um deverá ter sua própia conta, onde poderá verificar seu saldo, extrato
 - React navigation, até dia 25/04
 - Fazer integração com API REST, até dia 30/05
 - Fazer persistência de dados, até dia 30/05
+- Finalizar CRUD de Usuários e Produtos, até dia 13/06
+- Fazer validação de autenticação para Admin, prefeito e usuário comum, até dia 17/06
+- Possibilitar compra de produtos, até dia 20/06
+- Integrar uso de câmera, até dia 24/06
+- Integrar API de leitura de código de barras, até dia 30/06
 
-## Funcionalidades desejáveis para o futuro:
+## Backlog
 
-- Filtro por data para o extrato.
+### Correções da AA1
+
+Deveria ter implementado uma Flatlist, acabei não finalizando pois não fiz a recuperação dos dados persistido para que fossem exibidos.
+
+### Método de persistência
+
+Estou utilizando o Firebase para armazenas os dados da aplicação e realizar a autenticação de usuário.
+
+No firebase estão sendo armazenados até o momento os dados de usuários, que podem ser cadastrados a partir da interface do aplicativo.
+
+### Uso do Alert
+
+O Alert está sendo utilizado para exibir uma mensagem de sucesso ou erro no cadastro de usuário. E será utilizado também para o cadastro de Produtos.
+
+### API remota e recurso inédito
+
+Pretendo utilizar a API de de leitura de código de barras do Firebase:
+https://firebase.google.com/docs/ml-kit/read-barcodes?hl=pt-br
+
+Essa API será utilizada para realizar a leitura de código de barras dos produtos que serão cadastrados no aplicativo.
+Para utilização dessa, será necessário integração com a câmera do celular, que entrará como o recurso inédito necessário no projeto final.
