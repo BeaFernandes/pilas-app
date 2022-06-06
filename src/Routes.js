@@ -16,10 +16,11 @@ import PersonalizedHeader from "./components/PersonalizedHeader";
 import Balance from "./components/Balance";
 import Usuarios from "./pages/Admin/Users";
 import NovoUsuario from "./pages/Admin/NewUser";
+import Produtos from "./pages/Mayor/Products";
+import NovoProduto from "./pages/Mayor/NewProduct";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-const TabAdmin = createBottomTabNavigator();
 const StackNested = createNativeStackNavigator();
 const StackFlutterAction = createNativeStackNavigator();
 
@@ -59,8 +60,31 @@ export default function Routes() {
     </StackFlutterAction.Navigator>
   );
 
+  const NavigatorFlutterActionMayor = () => (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Products"
+        component={Produtos}
+        options={{
+          title: "Produtos",
+          headerStyle: { backgroundColor: "#36A7D0" },
+          headerTintColor: "#fff",
+        }}
+      />
+      <Stack.Screen
+        name="NovoProduto"
+        component={NovoProduto}
+        options={{
+          title: "Novo produto",
+          headerStyle: { backgroundColor: "#36A7D0" },
+          headerTintColor: "#fff",
+        }}
+      />
+    </Stack.Navigator>
+  );
+
   const NavigatorAdmin = () => (
-    <TabAdmin.Navigator
+    <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -85,12 +109,12 @@ export default function Routes() {
         tabBarInactiveTintColor: "gray",
       })}
     >
-      <TabAdmin.Screen
+      <Tab.Screen
         name="Usuarios"
         component={NavigatorFlutterAction}
         options={{ headerShown: false }}
       />
-      <TabAdmin.Screen
+      <Tab.Screen
         name="Conta"
         component={Conta}
         options={{
@@ -99,7 +123,50 @@ export default function Routes() {
           headerTintColor: "#fff",
         }}
       />
-    </TabAdmin.Navigator>
+    </Tab.Navigator>
+  );
+
+  const NavigatorMayor = () => (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === "Produtos") {
+            iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "Conta") {
+            iconName = focused ? "account" : "account-outline";
+          }
+
+          return (
+            <View>
+              <MaterialCommunityIcons
+                name={iconName}
+                size={size}
+                color={color}
+              />
+            </View>
+          );
+        },
+        tabBarActiveTintColor: "#36A7D0",
+        tabBarInactiveTintColor: "gray",
+      })}
+    >
+      <Tab.Screen
+        name="Produtos"
+        component={NavigatorFlutterActionMayor}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Conta"
+        component={Conta}
+        options={{
+          headerTitle: "Minha conta",
+          headerStyle: { backgroundColor: "#36A7D0" },
+          headerTintColor: "#fff",
+        }}
+      />
+    </Tab.Navigator>
   );
 
   const NavigatorNested = () => (
