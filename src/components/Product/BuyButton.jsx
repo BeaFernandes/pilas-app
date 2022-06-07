@@ -5,10 +5,7 @@ export default function BuyButton() {
   return (
     <View style={styles.container}>
       <Pressable>
-        <Image
-          style={styles.bt}
-          source={require("../../../assets/images/buy-bt.png")}
-        />
+        <Image style={styles.bt} source={require("images/buy-bt.png")} />
       </Pressable>
     </View>
   );

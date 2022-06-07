@@ -1,7 +1,7 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import React from "react";
-import Balance from "../components/Balance";
-import Extract from "./Extract";
+import Balance from "../../components/Balance";
+import Extract from "../Extract";
 
 export default function Home({ navigation }) {
   return (

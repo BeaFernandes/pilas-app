@@ -1,7 +1,7 @@
 import { View, Text, Image, Button, StyleSheet, TextInput } from "react-native";
 import { React, useState } from "react";
 import { useContext } from "react";
-import { AppContext } from "../contexts/AppContext";
+import { AppContext } from "../../contexts/AppContext";
 import useAuth from "hooks/useAuth";
 import useReference from "hooks/useReference";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -29,10 +29,7 @@ export default function Login({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.logo}
-        source={require("../../assets/images/logo.png")}
-      />
+      <Image style={styles.logo} source={require("images/logo.png")} />
       <View style={styles.form}>
         <Text style={styles.title}>Entre com sua conta</Text>
         <TextInput
@@ -57,10 +54,7 @@ export default function Login({ navigation }) {
           Esqueci minha senha
         </Text>
       </View>
-      <Image
-        style={styles.powered}
-        source={require("../../assets/images/powered.png")}
-      />
+      <Image style={styles.powered} source={require("images/powered.png")} />
     </View>
   );
 }

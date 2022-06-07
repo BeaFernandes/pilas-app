@@ -3,9 +3,16 @@ import { React, useState, useEffect } from "react";
 import { FloatingAction } from "react-native-floating-action";
 import UserItem from "../../../components/UserItem";
 import listUsers from "../../../services/User/listUsers";
+import useList from "hooks/useList";
+import listToArray from "../../../services/listToArray";
+import User from "./User";
 
 export default function Users({ navigation }) {
-  const { users } = listUsers;
+  const { data } = useList("users");
+
+  if (!data) return <Text>Loading...</Text>;
+
+  console.log(listToArray(data));
 
   const actions = [
     {
@@ -28,40 +35,23 @@ export default function Users({ navigation }) {
     navigation.navigate(name);
   };
 
-  const User = ({ user }) => {
-    return (
-      <View>
-        <Text>{user.name}alo</Text>
-      </View>
-    );
-  };
+  const renderUser = ({ item }) => (
+    <User
+      name={item.name}
+      email={item.email}
+      department={item.department}
+      onPress={() => navigation.navigate("NovoUsuario")}
+    />
+  );
 
-  //const usersList = [];
-  //const test = () => {
-  // if (users.data) {
-  //    Object.keys(users.data).forEach((key) => {
-  //      usersList.push(users.data[key]);
-  //    });
-  //  }
-  //  console.log(usersList[0]);
-  //};
-
-  const handleTest = () => {
-    console.log(users);
-  };
   return (
     <View style={styles.container}>
-      <Pressable style={styles.extractButton} onPress={handleTest}>
-        <Text style={styles.buttonFont}>Extrato</Text>
-      </Pressable>
-
       <FlatList
-        data={users}
-        renderItem={User}
-        keyExtractor={(user) => user.userId}
+        data={listToArray(data)}
+        renderItem={renderUser}
+        keyExtractor={(item) => item.key}
       />
 
-      <View style={styles.balanceContainer}></View>
       <FloatingAction
         color={"#36A7D0"}
         overlayColor={"rgba(68, 68, 68, 0.4)"}
@@ -77,28 +67,6 @@ export default function Users({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
-    alignItems: "center",
     backgroundColor: "#fff",
-  },
-  balanceContainer: {
-    width: 300,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginTop: 20,
-  },
-  extractButton: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 90,
-    backgroundColor: "#36A7D0",
-    padding: 8,
-    borderRadius: 5,
-  },
-  buttonFont: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 15,
   },
 });

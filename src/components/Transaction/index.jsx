@@ -6,8 +6,8 @@ import Date from "./Date";
 export default function index({ type, name, price, date, weekDay }) {
   const transactionArrow =
     type == "debit"
-      ? require("../../../assets/images/down-arrow.png")
-      : require("../../../assets/images/up-arrow.png");
+      ? require("images/down-arrow.png")
+      : require("images/up-arrow.png");
   return (
     <View style={styles.container}>
       <View style={styles.spaceOrganize}>

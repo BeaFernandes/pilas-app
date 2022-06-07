@@ -1,12 +1,9 @@
 import { View, StyleSheet, Image, Text } from "react-native";
-import PersonalInfos from "../components/PersonalInfos";
+import PersonalInfos from "../../components/PersonalInfos";
 export default function Account() {
   return (
     <View style={styles.container}>
-      <Image
-        source={require("../../assets/images/avatar.png")}
-        style={styles.avatar}
-      />
+      <Image source={require("images/avatar.png")} style={styles.avatar} />
       <Text style={styles.name}>Fulano de Tal</Text>
       <PersonalInfos></PersonalInfos>
     </View>
