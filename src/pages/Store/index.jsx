@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, ScrollView, FlatList } from "react-native";
 import React from "react";
-import Product from "../../components/Product";
+import Product from "./Product";
 
 export default function Store() {
   return (

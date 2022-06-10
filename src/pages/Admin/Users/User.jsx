@@ -25,22 +25,24 @@ export default function User({ name, email, department, onPress }) {
 
 const styles = StyleSheet.create({
   user: {
-    padding: 15,
+    padding: 25,
     borderColor: "#E5E5E5",
     borderBottomWidth: 1,
     minWidth: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: "white",
   },
   title: {
     color: "#5E5E5E",
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: "bold",
+    paddingBottom: 10,
   },
   email: {
     color: "#8D8D8D",
-    fontSize: 17,
+    fontSize: 15,
   },
   information: {},
   chevron: {},

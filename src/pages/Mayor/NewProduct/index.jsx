@@ -10,7 +10,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { React, useState } from "react";
 import useList from "hooks/useList";
-import createUser from "../../../services/User/createUser";
+import createUser from "../../../services/createUser";
 
 export default function NewProduct({ navigation }) {
   const products = useList("products");

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { React, useState } from "react";
 import useList from "hooks/useList";
-import createUser from "../../../services/User/createUser";
+import createUser from "../../../services/createUser";
 
 export default function NewUser({ navigation }) {
   const users = useList("users");

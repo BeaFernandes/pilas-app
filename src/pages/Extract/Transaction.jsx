@@ -1,9 +1,9 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
-import ProductInfo from "../ProductInfo";
+import ProductInfo from "components/ProductInfo";
 import Date from "./Date";
 
-export default function index({ type, name, price, date, weekDay }) {
+export default function Transaction({ type, name, price, date, weekDay }) {
   const transactionArrow =
     type == "debit"
       ? require("images/down-arrow.png")
