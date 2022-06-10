@@ -1,18 +1,14 @@
-import { View, Text, Pressable, StyleSheet, FlatList } from "react-native";
-import { React, useState, useEffect } from "react";
+import { View, Text, StyleSheet, FlatList } from "react-native";
+import { React } from "react";
 import { FloatingAction } from "react-native-floating-action";
-import UserItem from "../../../components/UserItem";
-import listUsers from "../../../services/User/listUsers";
 import useList from "hooks/useList";
 import listToArray from "../../../services/listToArray";
 import User from "./User";
 
 export default function Users({ navigation }) {
-  const { data } = useList("users");
+  const users = useList("users").data;
 
-  if (!data) return <Text>Loading...</Text>;
-
-  console.log(listToArray(data));
+  if (!users) return <Text>Loading...</Text>;
 
   const actions = [
     {
@@ -31,23 +27,19 @@ export default function Users({ navigation }) {
     },
   ];
 
-  const handlePressItem = (name) => {
-    navigation.navigate(name);
-  };
-
   const renderUser = ({ item }) => (
     <User
       name={item.name}
       email={item.email}
       department={item.department}
-      onPress={() => navigation.navigate("NovoUsuario")}
+      onPress={() => navigation.navigate("EditarUsuario", { user: item })}
     />
   );
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={listToArray(data)}
+        data={listToArray(users)}
         renderItem={renderUser}
         keyExtractor={(item) => item.key}
       />
@@ -57,7 +49,7 @@ export default function Users({ navigation }) {
         overlayColor={"rgba(68, 68, 68, 0.4)"}
         actions={actions}
         onPressItem={(name) => {
-          handlePressItem(name);
+          navigation.navigate(name);
         }}
       />
     </View>
@@ -67,6 +59,6 @@ export default function Users({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#F3F3F3",
   },
 });

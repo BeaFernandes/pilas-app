@@ -10,12 +10,13 @@ import {
 import { React, useState } from "react";
 import useList from "hooks/useList";
 
-export default function EditUser({ navigation }) {
-  const [name, onChangeName] = useState(null);
-  const [email, onChangeEmail] = useState(null);
-  const [department, onChangeDepartment] = useState(null);
-  const [pass, onChangePass] = useState(null);
-  const [confirmPass, onChangeConfirmPass] = useState(null);
+export default function EditUser({ route, navigation }) {
+  const user = route.params.user;
+  const users = useList("users");
+
+  const [name, onChangeName] = useState(user.name);
+  const [email, onChangeEmail] = useState(user.email);
+  const [department, onChangeDepartment] = useState(user.department);
 
   const handleOnSend = () => {};
 
@@ -35,6 +36,7 @@ export default function EditUser({ navigation }) {
           onChangeText={onChangeEmail}
           keyboardType="email-address"
           autoCapitalize="none"
+          editable={false}
         />
         <TextInput
           style={styles.input}
@@ -42,23 +44,17 @@ export default function EditUser({ navigation }) {
           value={department}
           onChangeText={onChangeDepartment}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Senha"
-          value={pass}
-          onChangeText={onChangePass}
-          secureTextEntry={true}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Confirmar senha"
-          value={confirmPass}
-          onChangeText={onChangeConfirmPass}
-          secureTextEntry={true}
-        />
-        <TouchableOpacity style={styles.button} onPress={handleOnSend}>
-          <Text style={styles.buttonText}>Cadastrar</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonsRow}>
+          <TouchableOpacity style={styles.button} onPress={handleOnSend}>
+            <Text style={styles.buttonText}>Salvar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, styles.deleteButton]}
+            onPress={handleOnSend}
+          >
+            <Text style={styles.buttonText}>Excluir</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -96,9 +92,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
+    minWidth: "45%",
   },
   buttonText: {
     color: "white",
     fontSize: 17,
+  },
+  buttonsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  deleteButton: {
+    backgroundColor: "#D53C4F",
   },
 });

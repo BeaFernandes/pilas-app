@@ -1,5 +1,5 @@
 import { View, StyleSheet, Image, Text } from "react-native";
-import PersonalInfos from "../../components/PersonalInfos";
+import PersonalInfos from "./PersonalInfos";
 export default function Account() {
   return (
     <View style={styles.container}>

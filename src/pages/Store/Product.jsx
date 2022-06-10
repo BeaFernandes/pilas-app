@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import ProductInfo from "../ProductInfo";
+import ProductInfo from "components/ProductInfo";
 import ItensCounter from "./ItensCounter";
 import BuyButton from "./BuyButton";
 
-export default function index({ name, price }) {
+export default function Product({ name, price }) {
   return (
     <View style={styles.container}>
       <View style={styles.product}>

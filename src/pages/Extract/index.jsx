@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import React from "react";
-import Transaction from "../../components/Transaction";
+import Transaction from "./Transaction";
 
 export default function Extract() {
   return (

@@ -16,13 +16,13 @@ import PersonalizedHeader from "./components/PersonalizedHeader";
 import Balance from "./components/Balance";
 import Usuarios from "./pages/Admin/Users";
 import NovoUsuario from "./pages/Admin/NewUser";
+import EditarUsuario from "./pages/Admin/EditUser";
 import Produtos from "./pages/Mayor/Products";
 import NovoProduto from "./pages/Mayor/NewProduct";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const StackNested = createNativeStackNavigator();
-const StackFlutterAction = createNativeStackNavigator();
 
 export default function Routes() {
   const app = useContext(AppContext);
@@ -37,9 +37,9 @@ export default function Routes() {
     </Stack.Navigator>
   );
 
-  const NavigatorFlutterAction = () => (
-    <StackFlutterAction.Navigator>
-      <StackFlutterAction.Screen
+  const NavigatorNestedAdmin = () => (
+    <StackNested.Navigator>
+      <StackNested.Screen
         name="Users"
         component={Usuarios}
         options={{
@@ -48,7 +48,7 @@ export default function Routes() {
           headerTintColor: "#fff",
         }}
       />
-      <StackFlutterAction.Screen
+      <StackNested.Screen
         name="NovoUsuario"
         component={NovoUsuario}
         options={{
@@ -57,7 +57,16 @@ export default function Routes() {
           headerTintColor: "#fff",
         }}
       />
-    </StackFlutterAction.Navigator>
+      <StackNested.Screen
+        name="EditarUsuario"
+        component={EditarUsuario}
+        options={{
+          title: "Informações de usuário",
+          headerStyle: { backgroundColor: "#36A7D0" },
+          headerTintColor: "#fff",
+        }}
+      />
+    </StackNested.Navigator>
   );
 
   const NavigatorFlutterActionMayor = () => (
@@ -111,7 +120,7 @@ export default function Routes() {
     >
       <Tab.Screen
         name="Usuarios"
-        component={NavigatorFlutterAction}
+        component={NavigatorNestedAdmin}
         options={{ headerShown: false }}
       />
       <Tab.Screen
