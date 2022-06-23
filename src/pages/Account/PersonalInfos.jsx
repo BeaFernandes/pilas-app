@@ -13,7 +13,7 @@ export default function PersonalInfos() {
   const handleLogout = () => {
     AsyncStorage.removeItem("login");
     logout();
-    app.setLoggedIn(false);
+    app.setUserLoggedIn(false);
   };
 
   return (

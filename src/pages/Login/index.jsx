@@ -3,28 +3,32 @@ import { React, useState } from "react";
 import { useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import useAuth from "hooks/useAuth";
+import useList from "hooks/useList";
+import listToArray from "../../services/listToArray";
 import useReference from "hooks/useReference";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login({ navigation }) {
-  const { login } = useAuth();
   const app = useContext(AppContext);
+  const { login } = useAuth();
 
   const [email, onChangeUser] = useState(null);
   const [pass, onChangPass] = useState(null);
 
   const handleLogin = () => {
-    login(email, pass)
-      .then((response) => {
-        AsyncStorage.setItem("login", JSON.stringify(response.user.uid));
-        //AsyncStorage.getItem("login").then((value) => {
-        //  if (value !== null) console.log(value);
-        //});
-        app.setLoggedIn(true);
-      })
-      .catch(() => {
-        console.log("Error treatment to be done");
-      });
+    if (email && pass) {
+      login(email, pass)
+        .then((response) => {
+          AsyncStorage.setItem("login", JSON.stringify(response.user.uid));
+          //AsyncStorage.getItem("login").then((value) => {
+          //  if (value !== null) console.log(value);
+          //});
+          app.setUserLoggedIn(true);
+        })
+        .catch(() => {
+          console.log("Error treatment to be done");
+        });
+    }
   };
 
   return (

@@ -10,8 +10,6 @@ export default function Users({ navigation }) {
 
   if (!users) return <Text>Loading...</Text>;
 
-  //console.log(listToArray(users));
-
   const actions = [
     {
       text: "Novo usuário",

@@ -7,15 +7,15 @@ import { Text } from "react-native";
 
 export default function App() {
   const firebaseApp = useFirebase(firebaseConfig);
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isUserLoggedIn, setUserLoggedIn] = useState(false);
   const [isAdminLoggedIn, setAdminLoggedIn] = useState(false);
   const [isMayorLoggedIn, setMayorLoggedIn] = useState(false);
 
   if (!firebaseApp) return <Text>Loading...</Text>;
 
   const app = {
-    setLoggedIn,
-    isLoggedIn,
+    setUserLoggedIn,
+    isUserLoggedIn,
     setAdminLoggedIn,
     isAdminLoggedIn,
     setMayorLoggedIn,
