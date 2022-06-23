@@ -29,6 +29,7 @@ export default function NewUser({ navigation }) {
             name: name,
             email: email,
             department: department,
+            isActive: true,
             isAdmin: false,
             isMayor: false,
           });
