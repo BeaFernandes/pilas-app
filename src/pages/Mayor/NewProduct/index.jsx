@@ -67,14 +67,6 @@ export default function NewProduct({ navigation }) {
         />
         <TextInput
           style={styles.input}
-          placeholder="Preço"
-          value={price}
-          onChangeText={onChangeEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
           placeholder="Quantidade"
           value={amount}
           onChangeText={onChangeAmount}
