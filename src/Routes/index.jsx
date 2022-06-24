@@ -14,8 +14,8 @@ export default function Routes() {
   return (
     <NavigationContainer>
       {
-        !app.isUserLoggedIn ? <NavigatorLogin /> : <NavigatorMayor />
-        //!app.isLoggedIn ? <NavigatorLogin /> : <NavigatorAdmin />
+        !app.isUserLoggedIn ? <NavigatorLogin /> : <NavigatorUser />
+        //!app.isUserLoggedIn ? <NavigatorLogin /> : <NavigatorAdmin />
       }
     </NavigationContainer>
   );

@@ -6,6 +6,7 @@ import { View } from "react-native";
 import Conta from "../pages/Account";
 import Produtos from "../pages/Mayor/Products";
 import NovoProduto from "../pages/Mayor/NewProduct";
+import EditarProduto from "../pages/Mayor/EditProduct";
 
 const NavigatorMayor = () => (
   <Tab.Navigator
@@ -62,6 +63,15 @@ const NavigatorNestedMayor = () => (
       component={NovoProduto}
       options={{
         title: "Novo produto",
+        headerStyle: { backgroundColor: "#36A7D0" },
+        headerTintColor: "#fff",
+      }}
+    />
+    <Stack.Screen
+      name="EditarProduto"
+      component={EditarProduto}
+      options={{
+        title: "Informações do produto",
         headerStyle: { backgroundColor: "#36A7D0" },
         headerTintColor: "#fff",
       }}
