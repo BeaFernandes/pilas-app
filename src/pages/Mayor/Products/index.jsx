@@ -1,11 +1,15 @@
-import { View, Text, Pressable, StyleSheet, FlatList } from "react-native";
-import { React, useState, useEffect } from "react";
+import { View, Text, StyleSheet, FlatList } from "react-native";
+import { React } from "react";
 import { FloatingAction } from "react-native-floating-action";
 import useList from "hooks/useList";
-import UserItem from "../../../components/UserItem";
+import listToArray from "../../../services/listToArray";
+import Product from "./Product";
 
 export default function Products({ navigation }) {
-  const { data } = useList("products");
+  const products = useList("products").data;
+
+  if (!products) return <Text>Loading...</Text>;
+
   const actions = [
     {
       text: "Novo produto",
@@ -20,11 +24,23 @@ export default function Products({ navigation }) {
     navigation.navigate(name);
   };
 
+  const renderProduct = ({ item }) => (
+    <Product
+      name={item.name}
+      amount={item.amount}
+      price={item.price}
+      onPress={() => navigation.navigate("EditarProduto", { product: item })}
+    />
+  );
+
   return (
     <View style={styles.container}>
-      <FlatList data={data} keyExtractor={(product) => product.productId} />
+      <FlatList
+        data={listToArray(products)}
+        renderItem={renderProduct}
+        keyExtractor={(item) => item.key}
+      />
 
-      <View style={styles.balanceContainer}></View>
       <FloatingAction
         color={"#36A7D0"}
         overlayColor={"rgba(68, 68, 68, 0.4)"}
@@ -40,28 +56,6 @@ export default function Products({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
-    alignItems: "center",
-    backgroundColor: "#fff",
-  },
-  balanceContainer: {
-    width: 300,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginTop: 20,
-  },
-  extractButton: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 90,
-    backgroundColor: "#36A7D0",
-    padding: 8,
-    borderRadius: 5,
-  },
-  buttonFont: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 15,
+    backgroundColor: "#F3F3F3",
   },
 });

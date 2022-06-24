@@ -1,12 +1,14 @@
+import Stack from "./Stack";
+import Tab from "./Tab";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { View } from "react-native";
+
 import Home from "../pages/Home";
 import Loja from "../pages/Store";
 import Conta from "../pages/Account";
 import Extrato from "../pages/Extract";
 import PersonalizedHeader from "../components/PersonalizedHeader";
 import Balance from "../components/Balance";
-import Stack from "./Stack";
-import Tab from "./Tab";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const NavigatorUser = () => (
   <Tab.Navigator
@@ -20,8 +22,6 @@ const NavigatorUser = () => (
           iconName = focused ? "store" : "store-outline";
         } else if (route.name === "Conta") {
           iconName = focused ? "account" : "account-outline";
-        } else if (route.name === "Prefeito") {
-          iconName = focused ? "account-star" : "account-star-outline";
         }
 
         return (
@@ -54,15 +54,6 @@ const NavigatorUser = () => (
     />
     <Tab.Screen
       name="Conta"
-      component={Conta}
-      options={{
-        headerTitle: "Minha conta",
-        headerStyle: { backgroundColor: "#36A7D0" },
-        headerTintColor: "#fff",
-      }}
-    />
-    <Tab.Screen
-      name="Prefeito"
       component={Conta}
       options={{
         headerTitle: "Minha conta",

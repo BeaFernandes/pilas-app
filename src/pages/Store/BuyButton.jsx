@@ -1,12 +1,11 @@
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 
 export default function BuyButton() {
   return (
     <View style={styles.container}>
-      <Pressable>
-        <Image style={styles.bt} source={require("images/buy-bt.png")} />
-      </Pressable>
+      <MaterialCommunityIcons name="basket" size={32} color="#36A7D0" />
     </View>
   );
 }

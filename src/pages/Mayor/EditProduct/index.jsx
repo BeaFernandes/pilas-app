@@ -11,21 +11,25 @@ import { React, useState } from "react";
 import useList from "hooks/useList";
 import CounterInput from "react-native-counter-input";
 
-export default function NewProduct({ navigation }) {
+export default function EditProduct({ route, navigation }) {
+  const product = route.params.product;
   const products = useList("products");
-  const [name, onChangeName] = useState(null);
-  const [amount, onChangeAmount] = useState(0);
-  const [price, onChangePrice] = useState(0.0);
 
-  const handleRegister = () => {
+  const [name, onChangeName] = useState(product.name);
+  const [amount, onChangeAmount] = useState(product.amount);
+  const [price, onChangePrice] = useState(product.price);
+
+  if (!products) return <Text>Loading...</Text>;
+
+  const handleUpdate = () => {
     if (name && amount && price) {
       Keyboard.dismiss();
-      products.create({
+      products.update(product.key, {
         name: name,
         amount: amount,
         price: price,
       });
-      Alert.alert("Sucesso", "Produto cadastrado com sucesso", [
+      Alert.alert("Sucesso", "Produto atualizado com sucesso", [
         {
           text: "Ok",
           onPress: () => navigation.navigate("Products"),
@@ -66,8 +70,8 @@ export default function NewProduct({ navigation }) {
             style={styles.counter}
           />
         </View>
-        <TouchableOpacity style={styles.button} onPress={handleRegister}>
-          <Text style={styles.buttonText}>Cadastrar</Text>
+        <TouchableOpacity style={styles.button} onPress={handleUpdate}>
+          <Text style={styles.buttonText}>Salvar</Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -19,10 +19,9 @@ export default function EditUser({ route, navigation }) {
   const [email, onChangeEmail] = useState(user.email);
   const [department, onChangeDepartment] = useState(user.department);
   const [isActive, setIsActive] = useState(user.isActive);
+  const toggleSwitch = () => setIsActive((previousState) => !previousState);
 
   if (!users) return <Text>Loading...</Text>;
-
-  const toggleSwitch = () => setIsActive((previousState) => !previousState);
 
   const handleUpdate = () => {
     if (name && email && department) {
