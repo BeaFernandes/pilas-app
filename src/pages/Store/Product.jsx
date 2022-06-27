@@ -7,10 +7,11 @@ import useList from "hooks/useList";
 import currentUser from "../../services/currentUser";
 import useReference from "../../firebase/hooks/useReference";
 import { getAuth } from "firebase/auth";
+import CounterQtd from "../../components/CounterQtd";
 
 export default function Item({ name, price, navigation }) {
   const userId = getAuth().currentUser.uid;
-  const [amount, setAmount] = useState("0");
+  const [amount, setAmount] = useState(0);
   const [userKey, setUserKey] = useState("");
   //const [userId, setUserId] = useState("");
 
@@ -44,20 +45,21 @@ export default function Item({ name, price, navigation }) {
     ]);
   };
 
-  const onIncreaseButtonPress = () => {
-    let newAmount = parseInt(amount) + 1;
-    setAmount(newAmount + "");
-  };
-  const onDecreaseButtonPress = () => {
-    let newAmount = amount == "0" ? 0 : parseInt(amount) - 1;
-    setAmount(newAmount + "");
-  };
+  // const onIncreaseButtonPress = () => {
+  //   let newAmount = parseInt(amount) + 1;
+  //   setAmount(newAmount + "");
+  // };
+  // const onDecreaseButtonPress = () => {
+  //   let newAmount = amount == "0" ? 0 : parseInt(amount) - 1;
+  //   setAmount(newAmount + "");
+  // };
   return (
     <View style={styles.container}>
       <View style={styles.product}>
         <ProductInfo name={name} price={price} />
       </View>
-      <View style={styles.counter}>
+      <CounterQtd value={amount} onChange={setAmount} />
+      {/* <View style={styles.counter}>
         <View style={styles.counterRow}>
           <TouchableOpacity
             style={styles.counterButton}
@@ -79,7 +81,7 @@ export default function Item({ name, price, navigation }) {
             <Text style={styles.counterText}>+</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </View> */}
       <BuyButton onPress={handleBuy} />
     </View>
   );
@@ -97,30 +99,30 @@ const styles = StyleSheet.create({
   product: {
     width: "40%",
   },
-  counterRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  counterButton: {
-    width: 35,
-    height: 35,
-    backgroundColor: "#E5E5E5",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  counterText: {
-    color: "#8D8D8D",
-    fontSize: 25,
-  },
-  counterNumberBox: {
-    width: 35,
-    height: 35,
-    alignItems: "center",
-    justifyContent: "center",
-    borderColor: "#E5E5E5",
-    borderWidth: 1,
-  },
-  counterNumber: {
-    color: "#8D8D8D",
-  },
+  // counterRow: {
+  //   flexDirection: "row",
+  //   justifyContent: "space-between",
+  // },
+  // counterButton: {
+  //   width: 35,
+  //   height: 35,
+  //   backgroundColor: "#E5E5E5",
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  // },
+  // counterText: {
+  //   color: "#8D8D8D",
+  //   fontSize: 25,
+  // },
+  // counterNumberBox: {
+  //   width: 35,
+  //   height: 35,
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   borderColor: "#E5E5E5",
+  //   borderWidth: 1,
+  // },
+  // counterNumber: {
+  //   color: "#8D8D8D",
+  // },
 });
