@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { React, useState } from "react";
 import useList from "hooks/useList";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 export default function EditUser({ route, navigation }) {
   const user = route.params.user;
@@ -18,20 +19,26 @@ export default function EditUser({ route, navigation }) {
   const [name, onChangeName] = useState(user.name);
   const [email, onChangeEmail] = useState(user.email);
   const [department, onChangeDepartment] = useState(user.department);
+  const [balance, onChangeBalance] = useState(user.balance);
   const [isActive, setIsActive] = useState(user.isActive);
-  const toggleSwitch = () => setIsActive((previousState) => !previousState);
+  const [isMayor, setIsMayor] = useState(user.isMayor);
+  const toggleSwitchActive = () =>
+    setIsActive((previousState) => !previousState);
+  const toggleSwitchMayor = () => setIsMayor((previousState) => !previousState);
 
   if (!users) return <Text>Loading...</Text>;
 
   const handleUpdate = () => {
-    if (name && email && department) {
+    if (name && email && department && balance) {
       Keyboard.dismiss();
       users.update(user.key, {
+        userId: user.userId,
         name: name,
         email: email,
         department: department,
+        balance: balance,
         isAdmin: false,
-        isMayor: false,
+        isMayor: isMayor,
         isActive: isActive,
       });
       Alert.alert("Sucesso", "Usuário atualizado com sucesso", [
@@ -72,17 +79,39 @@ export default function EditUser({ route, navigation }) {
           value={department}
           onChangeText={onChangeDepartment}
         />
+        <TextInput
+          style={styles.input}
+          placeholder="Saldo em pila"
+          value={balance}
+          onChangeText={onChangeBalance}
+        />
         <View style={styles.buttonsRow}>
-          <Text style={styles.text}>Desativado</Text>
-          <Switch
-            trackColor={{ false: "#8D8D8D", true: "#36A7D0" }}
-            thumbColor={isActive ? "#f4f3f4" : "#f4f3f4"}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isActive}
-          />
-          <Text style={styles.text}>Ativo</Text>
+          <View>
+            <BouncyCheckbox
+              fillColor="#36A7D0"
+              text="Prefeito"
+              iconStyle={{ borderColor: "#36A7D0", borderRadius: 5 }}
+              textStyle={{ textDecorationLine: "none" }}
+              isChecked={isMayor}
+              onPress={(val) => {
+                setIsMayor(val);
+                console.log(isMayor);
+              }}
+            />
+          </View>
+          <View style={styles.switchRow}>
+            <Text style={styles.text}>Desativado</Text>
+            <Switch
+              trackColor={{ false: "#8D8D8D", true: "#36A7D0" }}
+              thumbColor={isActive ? "#f4f3f4" : "#f4f3f4"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitchActive}
+              value={isActive}
+            />
+            <Text style={styles.text}>Ativo</Text>
+          </View>
         </View>
+
         <TouchableOpacity style={styles.button} onPress={handleUpdate}>
           <Text style={styles.buttonText}>Salvar</Text>
         </TouchableOpacity>
@@ -129,9 +158,10 @@ const styles = StyleSheet.create({
   buttonsRow: {
     flexDirection: "row",
     alignItems: "center",
-    alignSelf: "flex-end",
+    justifyContent: "space-between",
   },
-  deleteButton: {
-    backgroundColor: "#D53C4F",
+  switchRow: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 });

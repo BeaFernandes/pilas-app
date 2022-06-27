@@ -5,7 +5,7 @@ export default function Balance({ amount, fontColor }) {
   return (
     <View>
       <Text style={[styles.balanceLabel, { color: fontColor }]}>Saldo</Text>
-      <Text style={[styles.balance, { color: fontColor }]}>Pila {amount}</Text>
+      <Text style={[styles.balance, { color: fontColor }]}>{amount} pila</Text>
     </View>
   );
 }

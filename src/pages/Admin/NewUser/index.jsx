@@ -16,11 +16,12 @@ export default function NewUser({ navigation }) {
   const [name, onChangeName] = useState(null);
   const [email, onChangeEmail] = useState(null);
   const [department, onChangeDepartment] = useState(null);
+  const [balance, onChangeBalance] = useState(null);
   const [pass, onChangePass] = useState(null);
   const [confirmPass, onChangeConfirmPass] = useState(null);
 
   const handleOnRegister = () => {
-    if (name && email && department && pass) {
+    if (name && email && department && pass && balance) {
       Keyboard.dismiss();
       createUser(email, pass)
         .then((response) => {
@@ -29,6 +30,7 @@ export default function NewUser({ navigation }) {
             name: name,
             email: email,
             department: department,
+            balance: balance,
             isActive: true,
             isAdmin: false,
             isMayor: false,
@@ -78,6 +80,12 @@ export default function NewUser({ navigation }) {
           placeholder="Departamento"
           value={department}
           onChangeText={onChangeDepartment}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Saldo em pila"
+          value={balance}
+          onChangeText={onChangeBalance}
         />
         <TextInput
           style={styles.input}

@@ -1,15 +1,33 @@
 import Routes from "./src/Routes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppContext } from "./src/contexts/AppContext";
 import firebaseConfig from "./src/firebase/config/firebaseConfig";
 import useFirebase from "./src/firebase/hooks/useFirebase";
 import { Text } from "react-native";
+import currentUser from "./src/services/currentUser";
 
 export default function App() {
   const firebaseApp = useFirebase(firebaseConfig);
+
+  const userJson = currentUser().user;
+
+  const loggedIn = userJson != null ? true : false;
+
   const [isUserLoggedIn, setUserLoggedIn] = useState(false);
   const [isAdminLoggedIn, setAdminLoggedIn] = useState(false);
   const [isMayorLoggedIn, setMayorLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const user = JSON.parse(userJson);
+
+    //console.log(user);
+
+    if (user != null) {
+      setAdminLoggedIn(user.isAdmin);
+      setMayorLoggedIn(user.isMayor);
+    }
+    setUserLoggedIn(loggedIn);
+  }, [userJson]);
 
   if (!firebaseApp) return <Text>Loading...</Text>;
 

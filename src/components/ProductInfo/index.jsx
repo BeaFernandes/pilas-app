@@ -5,7 +5,7 @@ export default function ProductInfo({ name, price }) {
   return (
     <View style={styles.container}>
       <Text style={styles.name}>{name}</Text>
-      <Text style={styles.price}>Pila {price}</Text>
+      <Text style={styles.price}>{price} pila</Text>
     </View>
   );
 }

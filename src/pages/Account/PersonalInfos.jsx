@@ -5,15 +5,19 @@ import React from "react";
 import PersonalInfoItem from "./PersonalInfoItem";
 import useAuth from "../../firebase/hooks/useAuth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import currentUser from "../../services/currentUser";
 
 export default function PersonalInfos() {
   const { logout } = useAuth();
+  const { removeCurrentUser } = currentUser();
   const app = useContext(AppContext);
 
   const handleLogout = () => {
-    AsyncStorage.removeItem("login");
+    removeCurrentUser();
     logout();
     app.setUserLoggedIn(false);
+    app.setAdminLoggedIn(false);
+    app.setMayorLoggedIn(false);
   };
 
   return (

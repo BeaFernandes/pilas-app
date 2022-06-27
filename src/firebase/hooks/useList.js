@@ -16,6 +16,13 @@ export default function useList(reference) {
     const databaseReference = ref(getDatabase(), reference);
     const newRef = push(databaseReference);
     set(newRef, newVal);
+    return newVal;
+  };
+
+  const createUser = (key, newVal) => {
+    const databaseReference = ref(getDatabase(), reference + "/" + key);
+    const newRef = push(databaseReference);
+    set(newRef, newVal);
   };
 
   const remove = (key) => {
@@ -40,5 +47,5 @@ export default function useList(reference) {
     return unsubscribeCallback;
   }, [user]);
 
-  return { data, create, remove, update };
+  return { data, create, remove, update, createUser };
 }

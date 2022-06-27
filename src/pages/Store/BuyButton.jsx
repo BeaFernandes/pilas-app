@@ -1,12 +1,12 @@
-import { View, Text, StyleSheet, Pressable, Image } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 
-export default function BuyButton() {
+export default function BuyButton({ onPress }) {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <MaterialCommunityIcons name="basket" size={32} color="#36A7D0" />
-    </View>
+    </TouchableOpacity>
   );
 }
 

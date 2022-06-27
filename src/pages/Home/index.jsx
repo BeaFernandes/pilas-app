@@ -1,13 +1,20 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import Balance from "../../components/Balance";
 import Extract from "../Extract";
+import currentUser from "../../services/currentUser";
 
 export default function Home({ navigation }) {
+  const userJson = currentUser().user;
+
+  if (!userJson) return <Text>Loading...</Text>;
+
+  const user = JSON.parse(userJson);
+
   return (
     <View style={styles.container}>
       <View style={styles.balanceContainer}>
-        <Balance amount={"30,00"} fontColor={"#8D8D8D"} />
+        <Balance amount={user.balance} fontColor={"#8D8D8D"} />
         <Pressable
           style={styles.extractButton}
           onPress={() => navigation.navigate("Extrato")}

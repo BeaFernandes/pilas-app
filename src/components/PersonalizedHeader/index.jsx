@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import Balance from "../Balance";
 import SearchButton from "./SearchButton";
 
 export default function ProductsHeader({ titleComponent }) {

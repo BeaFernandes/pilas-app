@@ -1,22 +1,25 @@
 import { View, Text, StyleSheet, ScrollView, FlatList } from "react-native";
 import React from "react";
 import Product from "./Product";
+import useList from "hooks/useList";
+import filterProductAvailable from "../../services/filterProductAvailable";
 
 export default function Store() {
+  const products = useList("products").data;
+
+  if (!products) return <Text>Loading...</Text>;
+
+  const renderProduct = ({ item }) => (
+    <Product name={item.name} price={item.price} />
+  );
+
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <Product name={"Iogurte Nuv"} price={"2,00"} />
-        <Product name={"Bolinho"} price={"1,00"} />
-        <Product name={"Chocomilk"} price={"2,00"} />
-        <Product name={"Barrinha de cereal"} price={"2,00"} />
-        <Product name={"Barra de chocolate"} price={"4,00"} />
-        <Product name={"Iogurte Nuv"} price={"2,00"} />
-        <Product name={"Bolinho"} price={"1,00"} />
-        <Product name={"Chocomilk"} price={"2,00"} />
-        <Product name={"Barrinha de cereal"} price={"2,00"} />
-        <Product name={"Barra de chocolate"} price={"4,00"} />
-      </ScrollView>
+      <FlatList
+        data={filterProductAvailable(products)}
+        renderItem={renderProduct}
+        keyExtractor={(item) => item.key}
+      />
     </View>
   );
 }
