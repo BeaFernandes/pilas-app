@@ -31,7 +31,7 @@ export default function EditProduct({ route, navigation }) {
       Alert.alert("Sucesso", "Produto atualizado com sucesso", [
         {
           text: "Ok",
-          onPress: () => navigation.navigate("Products"),
+          onPress: () => navigation.navigate("Mayor"),
         },
       ]);
     } else {
@@ -48,7 +48,7 @@ export default function EditProduct({ route, navigation }) {
       {
         text: "Sim",
         onPress: () => {
-          navigation.navigate("Products");
+          navigation.navigate("Mayor");
           products.remove(product.key);
         },
       },

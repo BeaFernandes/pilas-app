@@ -15,7 +15,7 @@ export default function useReference(reference, defaultVal = null) {
   useEffect(() => {
     const databaseReference = ref(getDatabase(), reference);
 
-    unsubscribeCallback = onValue(databaseReference, (snapshot) => {
+    const unsubscribeCallback = onValue(databaseReference, (snapshot) => {
       setCurrentVal(snapshot.val());
     });
 

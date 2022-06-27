@@ -1,3 +1,10 @@
+import { LogBox } from "react-native";
+LogBox.ignoreLogs([
+  "Warning: Can't perform a React state update on an unmounted component.",
+]);
+LogBox.ignoreLogs(["AsyncStorage has been extracted from react-native core"]);
+LogBox.ignoreLogs(["Setting a timer for a long period of time, i.e. multiple"]);
+
 import Routes from "./src/Routes";
 import { useEffect, useState } from "react";
 import { AppContext } from "./src/contexts/AppContext";
@@ -19,8 +26,6 @@ export default function App() {
 
   useEffect(() => {
     const user = JSON.parse(userJson);
-
-    //console.log(user);
 
     if (user != null) {
       setAdminLoggedIn(user.isAdmin);

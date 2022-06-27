@@ -4,13 +4,13 @@ import Product from "./Product";
 import useList from "hooks/useList";
 import filterProductAvailable from "../../services/filterProductAvailable";
 
-export default function Store() {
+export default function Store({ navigation }) {
   const products = useList("products").data;
 
   if (!products) return <Text>Loading...</Text>;
 
   const renderProduct = ({ item }) => (
-    <Product name={item.name} price={item.price} />
+    <Product name={item.name} price={item.price} navigation={navigation} />
   );
 
   return (

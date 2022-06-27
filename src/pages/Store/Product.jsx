@@ -1,25 +1,55 @@
-import { StyleSheet, View, Text, TextInput } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { StyleSheet, View, Text, TextInput, Alert } from "react-native";
 import { TouchableOpacity } from "react-native";
-import Counter from "../../components/Counter";
 import BuyButton from "./BuyButton";
 import ProductInfo from "../../components/ProductInfo";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useList from "hooks/useList";
+import currentUser from "../../services/currentUser";
+import useReference from "../../firebase/hooks/useReference";
 
-export default function Item({ name, price }) {
-  const [amount, onChangeAmount] = useState("0");
+export default function Item({ name, price, navigation }) {
+  const [amount, setAmount] = useState("0");
+  const [userKey, setUserKey] = useState("");
+  const [userId, setUserId] = useState("");
+
+  currentUser()
+    .getCurrentUser()
+    .then((response) => {
+      setUserKey(JSON.parse(response).key);
+      setUserId(JSON.parse(response).userId);
+    });
+
+  const extractRecord = useList(userId + "/extract/");
+  const [currentVal, setCurrentVal] = useReference(
+    "users/" + userKey + "/balance"
+  );
+
   const handleBuy = () => {
-    console.log("teste");
-    console.log(amount);
+    const total = parseInt(amount) * parseInt(price);
+    const newBalance = currentVal - total;
+    extractRecord.create({
+      product: name,
+      amount: amount,
+      price: price,
+      total: total,
+      type: "debit",
+    });
+    setCurrentVal(newBalance);
+    setAmount("0");
+    Alert.alert("Sucesso", "Produto comprado com sucesso", [
+      {
+        text: "Ok",
+      },
+    ]);
   };
 
   const onIncreaseButtonPress = () => {
     let newAmount = parseInt(amount) + 1;
-    onChangeAmount(newAmount + "");
+    setAmount(newAmount + "");
   };
   const onDecreaseButtonPress = () => {
     let newAmount = amount == "0" ? 0 : parseInt(amount) - 1;
-    onChangeAmount(newAmount + "");
+    setAmount(newAmount + "");
   };
   return (
     <View style={styles.container}>
@@ -38,7 +68,7 @@ export default function Item({ name, price }) {
             <TextInput
               style={styles.counterNumber}
               value={amount}
-              onChangeText={onChangeAmount}
+              onChangeText={setAmount}
             />
           </View>
           <TouchableOpacity
