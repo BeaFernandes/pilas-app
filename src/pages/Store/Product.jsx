@@ -13,7 +13,6 @@ export default function Item({ name, price, navigation }) {
   const userId = getAuth().currentUser.uid;
   const [amount, setAmount] = useState(0);
   const [userKey, setUserKey] = useState("");
-  //const [userId, setUserId] = useState("");
 
   currentUser()
     .getCurrentUser()
@@ -22,13 +21,11 @@ export default function Item({ name, price, navigation }) {
     });
 
   const extractRecord = useList(userId + "/extract/");
-  const [currentVal, setCurrentVal] = useReference(
-    "users/" + userKey + "/balance"
-  );
+  const [balance, setBalance] = useReference("users/" + userKey + "/balance");
 
   const handleBuy = () => {
     const total = parseInt(amount) * parseInt(price);
-    const newBalance = currentVal - total;
+    const newBalance = balance - total;
     extractRecord.create({
       product: name,
       amount: amount,
@@ -36,8 +33,7 @@ export default function Item({ name, price, navigation }) {
       total: total,
       type: "debit",
     });
-    setCurrentVal(newBalance);
-    setAmount("0");
+    setBalance(newBalance);
     Alert.alert("Sucesso", "Produto comprado com sucesso", [
       {
         text: "Ok",
@@ -45,43 +41,13 @@ export default function Item({ name, price, navigation }) {
     ]);
   };
 
-  // const onIncreaseButtonPress = () => {
-  //   let newAmount = parseInt(amount) + 1;
-  //   setAmount(newAmount + "");
-  // };
-  // const onDecreaseButtonPress = () => {
-  //   let newAmount = amount == "0" ? 0 : parseInt(amount) - 1;
-  //   setAmount(newAmount + "");
-  // };
   return (
     <View style={styles.container}>
       <View style={styles.product}>
         <ProductInfo name={name} price={price} />
       </View>
       <CounterQtd value={amount} onChange={setAmount} />
-      {/* <View style={styles.counter}>
-        <View style={styles.counterRow}>
-          <TouchableOpacity
-            style={styles.counterButton}
-            onPress={onDecreaseButtonPress}
-          >
-            <Text style={styles.counterText}>-</Text>
-          </TouchableOpacity>
-          <View style={styles.counterNumberBox}>
-            <TextInput
-              style={styles.counterNumber}
-              value={amount}
-              onChangeText={setAmount}
-            />
-          </View>
-          <TouchableOpacity
-            style={styles.counterButton}
-            onPress={onIncreaseButtonPress}
-          >
-            <Text style={styles.counterText}>+</Text>
-          </TouchableOpacity>
-        </View>
-      </View> */}
+
       <BuyButton onPress={handleBuy} />
     </View>
   );

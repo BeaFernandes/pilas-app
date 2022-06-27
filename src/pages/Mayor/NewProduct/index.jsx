@@ -40,14 +40,6 @@ export default function NewProduct({ navigation }) {
     }
   };
 
-  // const onIncreaseButtonPress = () => {
-  //   let newAmount = parseInt(amount) + 1;
-  //   onChangeAmount(newAmount + "");
-  // };
-  // const onDecreaseButtonPress = () => {
-  //   let newAmount = amount == "0" ? 0 : parseInt(amount) - 1;
-  //   onChangeAmount(newAmount + "");
-  // };
   return (
     <View style={styles.container}>
       <View style={styles.form}>
@@ -67,30 +59,6 @@ export default function NewProduct({ navigation }) {
           <Text style={styles.amountLabel}>Quantidade</Text>
 
           <CounterQtd value={amount} onChange={onChangeAmount} />
-
-          {/* <View style={styles.counter}>
-            <View style={styles.counterRow}>
-              <TouchableOpacity
-                style={styles.counterButton}
-                onPress={onDecreaseButtonPress}
-              >
-                <Text style={styles.counterText}>-</Text>
-              </TouchableOpacity>
-              <View style={styles.counterNumberBox}>
-                <TextInput
-                  style={styles.counterNumber}
-                  value={amount}
-                  onChangeText={onChangeAmount}
-                />
-              </View>
-              <TouchableOpacity
-                style={styles.counterButton}
-                onPress={onIncreaseButtonPress}
-              >
-                <Text style={styles.counterText}>+</Text>
-              </TouchableOpacity>
-            </View>
-          </View> */}
         </View>
         <TouchableOpacity style={styles.button} onPress={handleRegister}>
           <Text style={styles.buttonText}>Cadastrar</Text>

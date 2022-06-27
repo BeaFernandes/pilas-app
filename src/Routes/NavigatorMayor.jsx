@@ -27,7 +27,6 @@ const NavigatorUser = () => {
 
   const [balance, setBalance] = useReference("users/" + userKey + "/balance");
 
-  if (!balance) return <Text>Loading...</Text>;
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
