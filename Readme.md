@@ -68,10 +68,3 @@ No firebase estão sendo armazenados até o momento os dados de usuários, que p
 
 O Alert está sendo utilizado para exibir uma mensagem de sucesso ou erro no cadastro de usuário. E será utilizado também para o cadastro de Produtos.
 
-### API remota e recurso inédito
-
-Pretendo utilizar a API de de leitura de código de barras do Firebase:
-https://firebase.google.com/docs/ml-kit/read-barcodes?hl=pt-br
-
-Essa API será utilizada para realizar a leitura de código de barras dos produtos que serão cadastrados no aplicativo.
-Para utilização dessa, será necessário integração com a câmera do celular, que entrará como o recurso inédito necessário no projeto final.
