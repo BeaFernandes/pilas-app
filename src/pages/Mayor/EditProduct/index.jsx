@@ -9,13 +9,14 @@ import {
 } from "react-native";
 import { React, useState } from "react";
 import useList from "hooks/useList";
+import CounterQtd from "../../../components/CounterQtd";
 
 export default function EditProduct({ route, navigation }) {
   const product = route.params.product;
   const products = useList("products");
 
   const [name, onChangeName] = useState(product.name);
-  const [amount, onChangeAmount] = useState(product.amount + "");
+  const [amount, onChangeAmount] = useState(product.amount);
   const [price, onChangePrice] = useState(product.price);
 
   if (!products) return <Text>Loading...</Text>;
@@ -58,14 +59,14 @@ export default function EditProduct({ route, navigation }) {
     ]);
   };
 
-  const onIncreaseButtonPress = () => {
-    let newAmount = parseInt(amount) + 1;
-    onChangeAmount(newAmount + "");
-  };
-  const onDecreaseButtonPress = () => {
-    let newAmount = amount == "0" ? 0 : parseInt(amount) - 1;
-    onChangeAmount(newAmount + "");
-  };
+  // const onIncreaseButtonPress = () => {
+  //   let newAmount = parseInt(amount) + 1;
+  //   onChangeAmount(newAmount + "");
+  // };
+  // const onDecreaseButtonPress = () => {
+  //   let newAmount = amount == "0" ? 0 : parseInt(amount) - 1;
+  //   onChangeAmount(newAmount + "");
+  // };
 
   return (
     <View style={styles.container}>
@@ -84,7 +85,10 @@ export default function EditProduct({ route, navigation }) {
         />
         <View style={styles.row}>
           <Text style={styles.amountLabel}>Quantidade</Text>
-          <View style={styles.counter}>
+
+          <CounterQtd value={amount} onChange={onChangeAmount} />
+
+          {/* <View style={styles.counter}>
             <View style={styles.counterRow}>
               <TouchableOpacity
                 style={styles.counterButton}
@@ -106,7 +110,7 @@ export default function EditProduct({ route, navigation }) {
                 <Text style={styles.counterText}>+</Text>
               </TouchableOpacity>
             </View>
-          </View>
+          </View> */}
         </View>
         <View style={styles.buttonsRow}>
           <TouchableOpacity style={styles.button} onPress={handleUpdate}>
@@ -181,30 +185,30 @@ const styles = StyleSheet.create({
   deleteButton: {
     backgroundColor: "#D53C4F",
   },
-  counterRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  counterButton: {
-    width: 35,
-    height: 35,
-    backgroundColor: "#E5E5E5",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  counterText: {
-    color: "#8D8D8D",
-    fontSize: 25,
-  },
-  counterNumberBox: {
-    width: 35,
-    height: 35,
-    alignItems: "center",
-    justifyContent: "center",
-    borderColor: "#E5E5E5",
-    borderWidth: 1,
-  },
-  counterNumber: {
-    color: "#8D8D8D",
-  },
+  // counterRow: {
+  //   flexDirection: "row",
+  //   justifyContent: "space-between",
+  // },
+  // counterButton: {
+  //   width: 35,
+  //   height: 35,
+  //   backgroundColor: "#E5E5E5",
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  // },
+  // counterText: {
+  //   color: "#8D8D8D",
+  //   fontSize: 25,
+  // },
+  // counterNumberBox: {
+  //   width: 35,
+  //   height: 35,
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   borderColor: "#E5E5E5",
+  //   borderWidth: 1,
+  // },
+  // counterNumber: {
+  //   color: "#8D8D8D",
+  // },
 });

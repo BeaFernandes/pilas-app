@@ -39,7 +39,7 @@ export default function CounterQtd({ value, onChange }) {
         <View style={styles.counterNumberBox}>
           <TextInput
             style={styles.counterNumber}
-            value={amount.toString()}
+            value={(amount || "0").toString()}
             keyboardType="numeric"
             onChangeText={(text) => onChangeLocal(parseInt(text))} // this is the only "string" event, so parse it...
           />
