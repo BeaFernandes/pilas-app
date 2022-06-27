@@ -7,7 +7,7 @@ import useAuth from "../../firebase/hooks/useAuth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import currentUser from "../../services/currentUser";
 
-export default function PersonalInfos() {
+export default function PersonalInfos({ email, department, isMayor, isAdmin }) {
   const { logout } = useAuth();
   const { removeCurrentUser } = currentUser();
   const app = useContext(AppContext);
@@ -20,17 +20,24 @@ export default function PersonalInfos() {
     app.setMayorLoggedIn(false);
   };
 
+  const role = () => {
+    if (isAdmin) {
+      return "Administrador";
+    } else if (isMayor) {
+      return "Prefeito";
+    } else {
+      return "Usuário";
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Dados do usuário</Text>
 
       <View style={styles.topBorder}>
-        <PersonalInfoItem
-          title={"E-mail"}
-          text={"fulanodetal@acttecnologia.com.br"}
-        />
-        <PersonalInfoItem title={"Departamento"} text={"Nível 2"} />
-        <PersonalInfoItem title={"Papel"} text={"Usuário"} />
+        <PersonalInfoItem title={"E-mail"} text={email} />
+        <PersonalInfoItem title={"Departamento"} text={department} />
+        <PersonalInfoItem title={"Papel"} text={role()} />
         <Pressable
           onPress={handleLogout}
           style={[styles.marginTop, styles.borderTop]}
