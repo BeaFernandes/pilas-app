@@ -1,16 +1,29 @@
-import { View, Text, Image, Button, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  Button,
+  StyleSheet,
+  TextInput,
+  Alert,
+  Keyboard,
+} from "react-native";
 import { React, useState } from "react";
 import { useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import useAuth from "hooks/useAuth";
 import useList from "hooks/useList";
 import listToArray from "../../services/listToArray";
-import useReference from "hooks/useReference";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import currentUser from "../../services/currentUser";
+import currentUserAuth from "../../services/currentUserAuth";
 
 export default function Login({ navigation }) {
-  const app = useContext(AppContext);
   const { login } = useAuth();
+  const users = useList("users");
+
+  const app = useContext(AppContext);
+  const { user, setCurrentUser } = currentUser();
+  const { userAuth, setCurrentUserAuth } = currentUserAuth();
 
   const [email, onChangeUser] = useState(null);
   const [pass, onChangPass] = useState(null);
@@ -19,15 +32,36 @@ export default function Login({ navigation }) {
     if (email && pass) {
       login(email, pass)
         .then((response) => {
-          AsyncStorage.setItem("login", JSON.stringify(response.user.uid));
-          //AsyncStorage.getItem("login").then((value) => {
-          //  if (value !== null) console.log(value);
-          //});
-          app.setUserLoggedIn(true);
+          const usersArray = listToArray(users.data);
+
+          usersArray.forEach((user) => {
+            if (user.userId == response.user.uid) {
+              if (user.isActive) {
+                setCurrentUser(user);
+                app.setAdminLoggedIn(user.isAdmin);
+                app.setMayorLoggedIn(user.isMayor);
+                app.setUserLoggedIn(true);
+              } else {
+                throw new Error();
+              }
+            }
+          });
         })
         .catch(() => {
-          console.log("Error treatment to be done");
+          Keyboard.dismiss();
+          Alert.alert("Erro", "Usuário ou senha incorretos", [
+            {
+              text: "Ok",
+            },
+          ]);
         });
+    } else {
+      Keyboard.dismiss();
+      Alert.alert("Erro", "Existem campos em branco", [
+        {
+          text: "Ok",
+        },
+      ]);
     }
   };
 

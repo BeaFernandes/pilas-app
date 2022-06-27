@@ -9,12 +9,11 @@ import {
 } from "react-native";
 import { React, useState } from "react";
 import useList from "hooks/useList";
-import CounterInput from "react-native-counter-input";
 
 export default function NewProduct({ navigation }) {
   const products = useList("products");
   const [name, onChangeName] = useState(null);
-  const [amount, onChangeAmount] = useState(0);
+  const [amount, onChangeAmount] = useState("0");
   const [price, onChangePrice] = useState(0.0);
 
   const handleRegister = () => {
@@ -40,6 +39,14 @@ export default function NewProduct({ navigation }) {
     }
   };
 
+  const onIncreaseButtonPress = () => {
+    let newAmount = parseInt(amount) + 1;
+    onChangeAmount(newAmount + "");
+  };
+  const onDecreaseButtonPress = () => {
+    let newAmount = amount == "0" ? 0 : parseInt(amount) - 1;
+    onChangeAmount(newAmount + "");
+  };
   return (
     <View style={styles.container}>
       <View style={styles.form}>
@@ -56,15 +63,30 @@ export default function NewProduct({ navigation }) {
           onChangeText={onChangePrice}
         />
         <View style={styles.row}>
-          <Text style={styles.priceInput}>Quantidade</Text>
-          <CounterInput
-            initial={amount}
-            onChange={onChangeAmount}
-            horizontal={true}
-            increaseButtonBackgroundColor="#36A7D0"
-            decreaseButtonBackgroundColor="#36A7D0"
-            style={styles.counter}
-          />
+          <Text style={styles.amountLabel}>Quantidade</Text>
+          <View style={styles.counter}>
+            <View style={styles.counterRow}>
+              <TouchableOpacity
+                style={styles.counterButton}
+                onPress={onDecreaseButtonPress}
+              >
+                <Text style={styles.counterText}>-</Text>
+              </TouchableOpacity>
+              <View style={styles.counterNumberBox}>
+                <TextInput
+                  style={styles.counterNumber}
+                  value={amount}
+                  onChangeText={onChangeAmount}
+                />
+              </View>
+              <TouchableOpacity
+                style={styles.counterButton}
+                onPress={onIncreaseButtonPress}
+              >
+                <Text style={styles.counterText}>+</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
         <TouchableOpacity style={styles.button} onPress={handleRegister}>
           <Text style={styles.buttonText}>Cadastrar</Text>
@@ -98,9 +120,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: "#8D8D8D",
   },
-  priceInput: {
-    padding: 10,
-    marginTop: 30,
+  amountLabel: {
     color: "#8D8D8D",
     width: "50%",
   },
@@ -117,13 +137,37 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 17,
   },
-  counter: {
-    marginTop: 20,
-    width: 150,
-    height: 55,
-  },
   row: {
+    padding: 10,
+    marginTop: 10,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
+  },
+  counterRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  counterButton: {
+    width: 35,
+    height: 35,
+    backgroundColor: "#E5E5E5",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  counterText: {
+    color: "#8D8D8D",
+    fontSize: 25,
+  },
+  counterNumberBox: {
+    width: 35,
+    height: 35,
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: "#E5E5E5",
+    borderWidth: 1,
+  },
+  counterNumber: {
+    color: "#8D8D8D",
   },
 });
