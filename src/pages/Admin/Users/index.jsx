@@ -18,13 +18,6 @@ export default function Users({ navigation }) {
       color: "#36A7D0",
       icon: require("images/account.png"),
     },
-    {
-      text: "Alterar prefeito",
-      name: "bt_alter_mayor",
-      position: 1,
-      color: "#36A7D0",
-      icon: require("images/account-star.png"),
-    },
   ];
 
   const renderUser = ({ item }) => (
