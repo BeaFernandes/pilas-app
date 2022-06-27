@@ -68,3 +68,9 @@ No firebase estão sendo armazenados até o momento os dados de usuários, que p
 
 O Alert está sendo utilizado para exibir uma mensagem de sucesso ou erro no cadastro de usuário. E será utilizado também para o cadastro de Produtos.
 
+### Capturas de tela do App no celular
+
+![Captura 1](/docs/screenshot-1.jpg)
+
+
+![Captura 2](/docs/screenshot-2.jpg)
