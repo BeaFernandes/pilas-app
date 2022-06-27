@@ -14,14 +14,12 @@ export default function Home({ navigation }) {
       setUserKey(JSON.parse(response).key);
     });
 
-  const [balace, setBalance] = useReference("users/" + userKey + "/balance");
-
-  if (!balace) return <Text>Loading...</Text>;
+  const [balance, setBalance] = useReference("users/" + userKey + "/balance");
 
   return (
     <View style={styles.container}>
       <View style={styles.balanceContainer}>
-        <Balance amount={balace} fontColor={"#8D8D8D"} />
+        <Balance amount={balance} fontColor={"#8D8D8D"} />
       </View>
       <Text style={styles.title}>Últimas compras</Text>
       <Extract />

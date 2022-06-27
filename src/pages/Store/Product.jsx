@@ -6,17 +6,18 @@ import { useEffect, useState } from "react";
 import useList from "hooks/useList";
 import currentUser from "../../services/currentUser";
 import useReference from "../../firebase/hooks/useReference";
+import { getAuth } from "firebase/auth";
 
 export default function Item({ name, price, navigation }) {
+  const userId = getAuth().currentUser.uid;
   const [amount, setAmount] = useState("0");
   const [userKey, setUserKey] = useState("");
-  const [userId, setUserId] = useState("");
+  //const [userId, setUserId] = useState("");
 
   currentUser()
     .getCurrentUser()
     .then((response) => {
       setUserKey(JSON.parse(response).key);
-      setUserId(JSON.parse(response).userId);
     });
 
   const extractRecord = useList(userId + "/extract/");

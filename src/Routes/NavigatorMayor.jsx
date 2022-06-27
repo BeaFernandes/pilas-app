@@ -2,6 +2,9 @@ import Stack from "./Stack";
 import Tab from "./Tab";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { View, Text } from "react-native";
+import useReference from "hooks/useReference";
+import { useState } from "react";
+import currentUser from "../services/currentUser";
 
 import Home from "../pages/Home";
 import Loja from "../pages/Store";
@@ -9,17 +12,22 @@ import Conta from "../pages/Account";
 import Extrato from "../pages/Extract";
 import PersonalizedHeader from "../components/PersonalizedHeader";
 import Balance from "../components/Balance";
-import currentUser from "../services/currentUser";
 import Prefeito from "../pages/Mayor/Products";
 import NovoProduto from "../pages/Mayor/NewProduct";
 import EditarProduto from "../pages/Mayor/EditProduct";
 
 const NavigatorUser = () => {
-  const userJson = currentUser().user;
+  const [userKey, setUserKey] = useState("");
 
-  if (!userJson) return <Text>Loading...</Text>;
+  currentUser()
+    .getCurrentUser()
+    .then((response) => {
+      setUserKey(JSON.parse(response).key);
+    });
 
-  const user = JSON.parse(userJson);
+  const [balance, setBalance] = useReference("users/" + userKey + "/balance");
+
+  if (!balance) return <Text>Loading...</Text>;
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -61,9 +69,7 @@ const NavigatorUser = () => {
         options={{
           headerTitle: () => (
             <PersonalizedHeader
-              titleComponent={
-                <Balance amount={user.balance} fontColor={"#fff"} />
-              }
+              titleComponent={<Balance amount={balance} fontColor={"#fff"} />}
             />
           ),
           headerStyle: { backgroundColor: "#36A7D0" },
