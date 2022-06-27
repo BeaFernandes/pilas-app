@@ -1,26 +1,41 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import React from "react";
+import { View, Text, StyleSheet, ScrollView, FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
 import Transaction from "./Transaction";
+import currentUser from "../../services/currentUser";
+import useList from "hooks/useList";
+import listToArray from "../../services/listToArray";
 
 export default function Extract() {
+  const [userId, setUserId] = useState("");
+
+  currentUser()
+    .getCurrentUser()
+    .then((response) => {
+      setUserId(JSON.parse(response).userId);
+    });
+
+  const extractRecord = useList(userId + "/extract/").data;
+
+  if (!extractRecord) return <Text></Text>;
+  const extractArray = listToArray(extractRecord);
+
+  const renderRecord = ({ item }) => (
+    <Transaction
+      type={item.type}
+      name={item.product}
+      price={item.price}
+      amount={item.amount}
+      total={item.total}
+    />
+  );
+
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <Transaction
-          type={"debit"}
-          name={"Iogurte Nuv"}
-          price={"2,00"}
-          date={"20/abr"}
-          weekDay={"qua"}
-        />
-        <Transaction
-          type={"credit"}
-          name={"Bônus"}
-          price={"2,00"}
-          date={"22/abr"}
-          weekDay={"sex"}
-        />
-      </ScrollView>
+      <FlatList
+        data={extractArray}
+        renderItem={renderRecord}
+        keyExtractor={(item) => item.key}
+      />
     </View>
   );
 }

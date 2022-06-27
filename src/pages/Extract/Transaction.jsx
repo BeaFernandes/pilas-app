@@ -1,9 +1,14 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
-import ProductInfo from "components/ProductInfo";
-import Date from "./Date";
 
-export default function Transaction({ type, name, price, date, weekDay }) {
+export default function Transaction({
+  type,
+  name,
+  price,
+  date,
+  total,
+  amount,
+}) {
   const transactionArrow =
     type == "debit"
       ? require("images/down-arrow.png")
@@ -12,9 +17,17 @@ export default function Transaction({ type, name, price, date, weekDay }) {
     <View style={styles.container}>
       <View style={styles.spaceOrganize}>
         <Image source={transactionArrow} style={styles.transactionIcon} />
-        <ProductInfo name={name} price={price} />
+        <View>
+          <Text style={styles.name}>
+            {amount}x {name}
+          </Text>
+          <Text style={styles.price}>{price} pila</Text>
+        </View>
       </View>
-      <Date date={date} weekDay={weekDay} />
+      <View>
+        <Text style={styles.date}>{date}</Text>
+        <Text style={styles.total}>Total: {total} pila</Text>
+      </View>
     </View>
   );
 }
@@ -35,5 +48,20 @@ const styles = StyleSheet.create({
   },
   spaceOrganize: {
     flexDirection: "row",
+  },
+  name: {
+    fontWeight: "bold",
+    color: "#5E5E5E",
+  },
+  price: {
+    color: "#8D8D8D",
+  },
+  date: {
+    fontWeight: "bold",
+    color: "#5E5E5E",
+  },
+  total: {
+    color: "#8D8D8D",
+    alignSelf: "flex-end",
   },
 });

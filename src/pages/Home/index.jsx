@@ -3,26 +3,27 @@ import React, { useState } from "react";
 import Balance from "../../components/Balance";
 import Extract from "../Extract";
 import currentUser from "../../services/currentUser";
+import useReference from "../../firebase/hooks/useReference";
 
 export default function Home({ navigation }) {
-  const userJson = currentUser().user;
+  const [userKey, setUserKey] = useState("");
 
-  if (!userJson) return <Text>Loading...</Text>;
+  currentUser()
+    .getCurrentUser()
+    .then((response) => {
+      setUserKey(JSON.parse(response).key);
+    });
 
-  const user = JSON.parse(userJson);
+  const [balace, setBalance] = useReference("users/" + userKey + "/balance");
+
+  if (!balace) return <Text>Loading...</Text>;
 
   return (
     <View style={styles.container}>
       <View style={styles.balanceContainer}>
-        <Balance amount={user.balance} fontColor={"#8D8D8D"} />
-        <Pressable
-          style={styles.extractButton}
-          onPress={() => navigation.navigate("Extrato")}
-        >
-          <Text style={styles.buttonFont}>Extrato</Text>
-        </Pressable>
+        <Balance amount={balace} fontColor={"#8D8D8D"} />
       </View>
-      <Text style={styles.title}>Compras recentes</Text>
+      <Text style={styles.title}>Últimas compras</Text>
       <Extract />
     </View>
   );
