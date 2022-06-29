@@ -25,9 +25,11 @@ const NavigatorUser = () => {
       setUserKey(JSON.parse(response).key);
     });
 
-  const [balance, setBalance] = useReference("users/" + userKey + "/balance");
+  const [balance, setBalance] = useReference(
+    "users/" + userKey + "/balance",
+    "Carregando..."
+  );
 
-  if (!balance) return <Text>Loading...</Text>;
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({

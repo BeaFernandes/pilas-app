@@ -15,7 +15,6 @@ import useAuth from "hooks/useAuth";
 import useList from "hooks/useList";
 import listToArray from "../../services/listToArray";
 import currentUser from "../../services/currentUser";
-import currentUserAuth from "../../services/currentUserAuth";
 
 export default function Login({ navigation }) {
   const { login } = useAuth();
@@ -23,7 +22,6 @@ export default function Login({ navigation }) {
 
   const app = useContext(AppContext);
   const { user, setCurrentUser } = currentUser();
-  const { userAuth, setCurrentUserAuth } = currentUserAuth();
 
   const [email, onChangeUser] = useState(null);
   const [pass, onChangPass] = useState(null);

@@ -19,10 +19,11 @@ export default function EditProduct({ route, navigation }) {
   const [amount, onChangeAmount] = useState(product.amount);
   const [price, onChangePrice] = useState(product.price);
 
-  if (!products) return <Text>Loading...</Text>;
+  if (!products) return <Text>Carregando...</Text>;
 
   const handleUpdate = () => {
-    if (name && amount && price) {
+    console.log(amount);
+    if (name && amount >= 0 && price) {
       Keyboard.dismiss();
       products.update(product.key, {
         name: name,

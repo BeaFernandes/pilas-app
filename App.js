@@ -34,7 +34,7 @@ export default function App() {
     setUserLoggedIn(loggedIn);
   }, [userJson]);
 
-  if (!firebaseApp) return <Text>Loading...</Text>;
+  if (!firebaseApp) return <Text>Carregando...</Text>;
 
   const app = {
     setUserLoggedIn,

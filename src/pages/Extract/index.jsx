@@ -4,14 +4,22 @@ import Transaction from "./Transaction";
 import currentUser from "../../services/currentUser";
 import useList from "hooks/useList";
 import listToArray from "../../services/listToArray";
-import { getAuth } from "firebase/auth";
+//import { getAuth } from "firebase/auth";
 
 export default function Extract() {
-  const userId = getAuth().currentUser.uid;
+  const [userId, setUserId] = useState("");
 
-  const extractRecord = useList(userId + "/extract/").data;
+  currentUser()
+    .getCurrentUser()
+    .then((response) => {
+      setUserId(JSON.parse(response).userId);
+    });
 
-  if (!extractRecord) return <Text></Text>;
+  const { data } = useList(userId + "/extract/");
+  const extractRecord = data;
+
+  if (!extractRecord) return <Text>Carregando...</Text>;
+
   const extractArray = listToArray(extractRecord);
 
   const renderRecord = ({ item }) => (
