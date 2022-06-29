@@ -8,7 +8,7 @@ import Product from "./Product";
 export default function Products({ navigation }) {
   const products = useList("products").data;
 
-  if (!products) return <Text>Loading...</Text>;
+  if (!products) return <Text>Carregando...</Text>;
 
   const actions = [
     {

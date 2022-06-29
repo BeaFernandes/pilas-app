@@ -14,7 +14,10 @@ export default function Home({ navigation }) {
       setUserKey(JSON.parse(response).key);
     });
 
-  const [balance, setBalance] = useReference("users/" + userKey + "/balance");
+  const [balance, setBalance] = useReference(
+    "users/" + userKey + "/balance",
+    "..."
+  );
 
   return (
     <View style={styles.container}>

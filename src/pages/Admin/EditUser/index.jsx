@@ -26,7 +26,7 @@ export default function EditUser({ route, navigation }) {
     setIsActive((previousState) => !previousState);
   const toggleSwitchMayor = () => setIsMayor((previousState) => !previousState);
 
-  if (!users) return <Text>Loading...</Text>;
+  if (!users) return <Text>Carregando...</Text>;
 
   const handleUpdate = () => {
     if (name && email && department && balance) {
@@ -95,7 +95,6 @@ export default function EditUser({ route, navigation }) {
               isChecked={isMayor}
               onPress={(val) => {
                 setIsMayor(val);
-                console.log(isMayor);
               }}
             />
           </View>

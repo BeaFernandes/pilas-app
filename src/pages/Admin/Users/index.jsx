@@ -8,7 +8,7 @@ import User from "./User";
 export default function Users({ navigation }) {
   const users = useList("users").data;
 
-  if (!users) return <Text>Loading...</Text>;
+  if (!users) return <Text>Carregando...</Text>;
 
   const actions = [
     {

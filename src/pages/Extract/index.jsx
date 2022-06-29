@@ -7,7 +7,6 @@ import listToArray from "../../services/listToArray";
 //import { getAuth } from "firebase/auth";
 
 export default function Extract() {
-  //const userID = getAuth().currentUser.uid;
   const [userId, setUserId] = useState("");
 
   currentUser()
@@ -16,9 +15,11 @@ export default function Extract() {
       setUserId(JSON.parse(response).userId);
     });
 
-  const extractRecord = useList(userId + "/extract/").data;
+  const { data } = useList(userId + "/extract/");
+  const extractRecord = data;
 
-  if (!extractRecord) return <Text></Text>;
+  if (!extractRecord) return <Text>Carregando...</Text>;
+
   const extractArray = listToArray(extractRecord);
 
   const renderRecord = ({ item }) => (

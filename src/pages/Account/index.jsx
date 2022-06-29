@@ -10,7 +10,7 @@ export default function Account() {
     setUser(JSON.parse(userJson));
   }, [userJson]);
 
-  if (!user) return <Text>Loading...</Text>;
+  if (!user) return <Text>Carregando...</Text>;
 
   return (
     <View style={styles.container}>
